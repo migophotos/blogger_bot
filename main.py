@@ -8,6 +8,7 @@ from shared.messages import MultiLang
 from src.bot_commands import set_commands
 from src import commands
 from shared import language_selector, scheduler_manage, admin_panel, content_manage
+from handlers import my_chat_member
 from shared.content_provider import ContentProvider
 
 
@@ -49,6 +50,7 @@ async def start():
     dp.shutdown.register(stop_bot)
     # route commands
     dp.include_routers(
+        my_chat_member.router,
         language_selector.router, admin_panel.router, scheduler_manage.router, content_manage.router,
         # Attention! commands router should always remain last!
         commands.router
@@ -56,7 +58,8 @@ async def start():
 
     try:
         await bot.delete_webhook(drop_pending_updates=True)
-        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+        # await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(),
+        await dp.start_polling(bot, allowed_updates=["message", "callback_query", "chat_member"])
     finally:
         await bot.session.close()
 
