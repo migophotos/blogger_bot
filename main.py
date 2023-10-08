@@ -48,12 +48,11 @@ async def start():
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
     # route commands
-    dp.include_router(language_selector.router)
-    dp.include_router(admin_panel.router)
-    dp.include_router(scheduler_manage.router)
-    dp.include_router(content_manage.router)
-    # Attention! commands router should always remain last!
-    dp.include_router(commands.router)
+    dp.include_routers(
+        language_selector.router, admin_panel.router, scheduler_manage.router, content_manage.router,
+        # Attention! commands router should always remain last!
+        commands.router
+    )
 
     try:
         await bot.delete_webhook(drop_pending_updates=True)
