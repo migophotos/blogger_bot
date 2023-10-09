@@ -6,8 +6,8 @@ from shared.config import Config
 from database.sql import DataBase
 from database.user_info import UserInfo
 from shared import tools
-from shared.scheduler_manage import set_new_scheduler
-from shared.admin_panel import show_keyboard
+from handlers.scheduler_manage import set_new_scheduler
+from handlers.admin_panel import show_keyboard
 
 router = Router()
 

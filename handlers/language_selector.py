@@ -1,11 +1,11 @@
-from aiogram import Bot, Router, F
+from aiogram import Bot, Router
 from aiogram.types import Message, InlineKeyboardButton, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters import Command
 
 from database.sql import DataBase
 from database.user_info import UserInfo
-from shared.callback_factory import LanguageCbFactory
+from handlers.callback_factory import LanguageCbFactory
 
 
 router = Router()

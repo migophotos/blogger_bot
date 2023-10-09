@@ -5,11 +5,9 @@ import logging
 from database.sql import DataBase
 from shared.config import Config
 from shared.messages import MultiLang
-from src.bot_commands import set_commands
-from src import commands
-from shared import language_selector, scheduler_manage, admin_panel, content_manage
-from handlers import my_chat_member
-from shared.content_provider import ContentProvider
+from src.bot_commands import set_bot_name, set_commands
+from handlers import my_chat_member, admin_panel, content_manage, language_selector, scheduler_manage, commands
+from src.content_provider import ContentProvider
 
 
 async def start_bot(bot: Bot):
@@ -19,6 +17,7 @@ async def start_bot(bot: Bot):
     await db.insert_def_scheduler()
 
     await bot.send_message(Config.admin_id, text=f'Bot {Config.bot_name} started!')
+    await set_bot_name(bot)
     await set_commands(bot)
     # let's feint with our ears...
     bot.ml = MultiLang(db)
@@ -59,7 +58,7 @@ async def start():
     try:
         await bot.delete_webhook(drop_pending_updates=True)
         # await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(),
-        await dp.start_polling(bot, allowed_updates=["message", "callback_query", "chat_member"])
+        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())#, allowed_updates=["message", "callback_query", "chat_member"])
     finally:
         await bot.session.close()
 

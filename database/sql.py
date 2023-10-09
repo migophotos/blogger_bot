@@ -76,6 +76,10 @@ class DataBase:
         except sqlite3.Error as error:
             print("Failed to update", error)
 
+    async def delete_user(self, id):
+        with self.connect:
+            return self.cursor.execute("""DELETE FROM users WHERE userid IN (?)""", [id]).fetchall()
+
     async def get_scheduler(self):
         with self.connect:
             return self.cursor.execute("""SELECT * FROM scheduler""").fetchone()

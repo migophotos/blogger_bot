@@ -1,17 +1,9 @@
-from aiogram import Bot, Router, F
-from aiogram.types import Message, InlineKeyboardButton, CallbackQuery
-from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram.filters import Command
+from aiogram import Bot, Router
+from aiogram.types import Message, CallbackQuery
 
-
-from shared.config import Config
 from database.sql import DataBase
 from database.user_info import UserInfo
-from shared.callback_factory import SchedulerCbFactory
-from shared import tools
-
-
-import json
+from handlers.callback_factory import SchedulerCbFactory
 
 router = Router()
 
