@@ -7,7 +7,7 @@ from database.sql import DataBase
 from database.user_info import UserInfo
 from shared import tools
 from handlers.scheduler_manage import set_new_scheduler
-from handlers.admin_panel import show_keyboard
+from handlers.admin_panel import show_admin_keyboard
 
 router = Router()
 
@@ -64,7 +64,7 @@ async def cmd_all_messages(msg: Message, bot: Bot):
         return True
 
     if cmd == 'exit:sc':
-        await show_keyboard(msg)
+        await show_admin_keyboard(msg)
         return True
 
     await msg.answer(bot.ml.msg("unknown_cmd"))

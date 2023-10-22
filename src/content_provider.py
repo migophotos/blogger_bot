@@ -16,6 +16,9 @@ class ContentProvider:
         self.scheduler = AsyncIOScheduler(timezone="Asia/Jerusalem")
         self.scheduler.start()
 
+    def is_running(self):
+        return bool(self.jobId)
+
     async def stop_scheduler(self):
         if self.jobId:
             self.scheduler.remove_job(self.jobId)

@@ -17,14 +17,17 @@ async def start_bot(bot: Bot):
     await db.insert_def_scheduler()
 
     await bot.send_message(Config.admin_id, text=f'Bot {Config.bot_name} started!')
-    await set_bot_name(bot)
-    await set_commands(bot)
+    print("main.py, line 20: uncomment next two lines before git commit")
+    # await set_bot_name(bot)
+    # await set_commands(bot)
+
     # let's feint with our ears...
     bot.ml = MultiLang(db)
     bot.db = db
     bot.provider = ContentProvider(bot)
-    next_run = await bot.provider.restart_scheduler()
-    await bot.send_message(Config.admin_id, text=f'Content Provider Job started.\nNext run at: {next_run}')
+    # next_run = await bot.provider.restart_scheduler()
+    # if next_run:
+    #     await bot.send_message(Config.admin_id, text=f'Content Provider Job started.\nNext run at: {next_run}')
 
 
 async def stop_bot(bot: Bot):

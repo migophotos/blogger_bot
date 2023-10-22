@@ -15,9 +15,15 @@ MESSAGES_RU = {
     "admin_panel": 'Панель администратора',
     "scheduler_manage": 'Планировщик...',
     "content_manage": 'Контент...',
+    "start_scheduler": 'Запустить планировщик',
     "restart_scheduler": 'Перезапустить планировщик',
     "stop_scheduler": 'Остановить планировщик',
     "unknown_cmd": 'Неизвестная команда, проверьте синтаксис!',
+    "select_content_type": 'Выберите тип контента',
+    "openai": 'Автоматически генерировать с помощью OpenAI',
+    "external_csv": 'Внешний CSV-файл',
+    "external_json": 'Внешний JSON файл',
+    "back_to_admin": 'Вернуться в панель администратора',
 }
 
 MESSAGES_EN = {
@@ -34,9 +40,15 @@ MESSAGES_EN = {
     "admin_panel": 'Admin Panel',
     "scheduler_manage": 'Scheduler...',
     "content_manage": 'Content...',
+    "start_scheduler": 'Start Scheduler',
     "restart_scheduler": 'Restart Scheduler',
     "stop_scheduler": 'Stop Scheduler',
     "unknown_cmd": 'Unknown command, check the syntax!',
+    "select_content_type": 'Select content type',
+    "openai": 'Automatically generate with OpenAI',
+    "external_csv": 'External CSV file',
+    "external_json": 'External JSON file',
+    "back_to_admin": 'Return to Admin panel',
 }
 
 MESSAGES_HE = {
@@ -53,9 +65,15 @@ MESSAGES_HE = {
     "admin_panel": 'פאנל ניהול',
     "scheduler_manage": 'מתזמן...',
     "content_manage": 'ניהול תוכן...',
+    "start_scheduler": 'התחל את מתזמן',
     "restart_scheduler": 'לחדש מתזמן',
     "stop_scheduler": 'עצור את מתזמן',
     "unknown_cmd": 'פקודה לא ידועה, בדוק את התחביר!',
+    "select_content_type": 'בחר סוג תוכן',
+    "openai": 'הפק באופן אוטומטי עם OpenAI',
+    "external_csv": 'קובץ CSV חיצוני',
+    "external_json": 'קובץ JSON חיצוני',
+    "back_to_admin": 'חזור ללוח הניהול',
 }
 
 

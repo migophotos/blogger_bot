@@ -15,6 +15,12 @@ class SchedulerCbFactory(CallbackData, prefix="scheduler_manage"):
     type: str
 
 
-class ContentCbFactory(CallbackData, prefix="scheduler_manage"):
+class ContentCbFactory(CallbackData, prefix="content_manage"):
     type: str
+    selected: str
+
+
+class ContentTypeCbFactory(CallbackData, prefix="content_manage"):
+    selected: str
+
 

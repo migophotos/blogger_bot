@@ -8,7 +8,7 @@ from handlers.callback_factory import SchedulerCbFactory
 router = Router()
 
 
-async def show_cur_scheduler(msg: Message):
+async def show_cur_scheduler(msg: Message, from_cb=True):
     if msg.bot.db:
         sched = await msg.bot.db.get_scheduler()
         month = sched[0]
@@ -26,8 +26,19 @@ async def show_cur_scheduler(msg: Message):
 
         # if month == "*" or month == "":
         #     month_str = "Каждый месяц"
-        sched_str = f"Current Scheduler:\n" \
+        sched_str = f"<b>Current Scheduler:</b>\n" \
                     f"{month_str}{day_str}{dow_str}{hour_str}{minute_str}{jitter_str}" \
+                    f"\n<b>Possible keys:</b>\n" \
+                    f"mth: - month (1-12)\n" \
+                    f"d: - day (1-31) \n" \
+                    f"dow: -day of week (0-6)\n" \
+                    f"h: - hour (0-23)\n" \
+                    f"m: - minute (0-59)\n" \
+                    f"j: - jitter (1-60)\n" \
+                    f"<b>Values:</b>\n" \
+                    f"* - each day, month, day of week, hour and minute\n" \
+                    f"/N - every N, for ex: h:*/2 - every two hours\n" \
+                    f", - enumeration of values, for ex: dof:1,3,5 - first, third and fifth day of week\n" \
                     f"\n<b><u>Examples of use</u></b>:\n" \
                     f"Runs every minute at 17 o'clock\n" \
                     f"<b>h:17 m:*</b>\n" \
@@ -40,7 +51,10 @@ async def show_cur_scheduler(msg: Message):
                     f"Runs on the months June, July, August each day at 9:00, 10:00 and 11:00\n" \
                     f"<b>mth:6-8 d:* h:9-11</b>\n\n" \
                     f"Enter scheduler parameters starting with <b>'cmd:sc '</b> or <b>'exit:sc'</b> to EXIT"
-        await msg.answer(sched_str)
+        if from_cb:
+            await msg.edit_text(sched_str)
+        else:
+            await msg.answer(sched_str)
 
 
 @router.callback_query(SchedulerCbFactory.filter())
@@ -81,5 +95,5 @@ async def set_new_scheduler(text: str, msg: Message):
         db: DataBase = msg.bot.db
         if db:
             await db.update_scheduler(new_scheduler)
-            await show_cur_scheduler(msg)
+            await show_cur_scheduler(msg, from_cb=False)
 

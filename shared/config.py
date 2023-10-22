@@ -10,14 +10,14 @@ class Config:
     admin_id: int = 565542529
 
     #  Russian channel
-    smart_ch_ru_name: str = "БЗ Forever"
-    smart_ch_ru_link: str = "@flp_rus_smart_channel"
+    channel_ru_name: str = "БЗ Forever"
+    channel_ru_link: str = "@flp_rus_smart_channel"
     #   English channel
-    smart_ch_en_name: str = "Eternal Wellness"
-    smart_ch_en_link: str = "@flp_eng_smart_channel"
+    channel_en_name: str = "Eternal Wellness"
+    channel_en_link: str = "@flp_eng_smart_channel"
     #   Hebrew channel
-    smart_ch_he_name: str = "חי לנצח"
-    smart_ch_he_link: str = "@flp_heb_smart_channel"
+    channel_he_name: str = "חי לנצח"
+    channel_he_link: str = "@flp_heb_smart_channel"
     #                month, day, day of week, hour, minute, jitter (+- seconds)
     def_scheduler = ("", "*", "", "10", "", "")
 

@@ -7,7 +7,7 @@ from aiogram.filters import Command
 from shared.config import Config
 from database.sql import DataBase
 from database.user_info import UserInfo
-from handlers.callback_factory import AdminCbFactory, SchedulerCbFactory, ContentCbFactory
+from handlers.callback_factory import AdminCbFactory, SchedulerCbFactory, ContentCbFactory, ContentTypeCbFactory
 
 router = Router()
 
@@ -24,23 +24,32 @@ async def cmd_admin(msg: Message, bot: Bot):
         await msg.answer(warning)
         return
 
-    await show_keyboard(msg)
+    await show_admin_keyboard(msg)
 
 
-async def show_keyboard(msg: Message):
+async def show_admin_keyboard(msg: Message, is_answer=True):
     buttons = [InlineKeyboardButton(text=msg.bot.ml.msg("scheduler_manage"),
                                     callback_data=SchedulerCbFactory(type="scheduler_manage").pack()),
                InlineKeyboardButton(text=msg.bot.ml.msg("content_manage"),
-                                    callback_data=ContentCbFactory(type="content_manage", selected="").pack()),
-               InlineKeyboardButton(text=msg.bot.ml.msg("stop_scheduler"),
-                                    callback_data=AdminCbFactory(type="stop_scheduler", selected="").pack()),
-               InlineKeyboardButton(text=msg.bot.ml.msg("restart_scheduler"),
-                                    callback_data=AdminCbFactory(type="restart_scheduler", selected="").pack()),
+                                    callback_data=ContentCbFactory(type="", selected="content_manage").pack())
                ]
+    if msg.bot.provider.is_running():
+        buttons.append(InlineKeyboardButton(text=msg.bot.ml.msg("stop_scheduler"),
+            callback_data=AdminCbFactory(type="stop_scheduler", selected="").pack()))
+        buttons.append(InlineKeyboardButton(text=msg.bot.ml.msg("restart_scheduler"),
+            callback_data=AdminCbFactory(type="restart_scheduler", selected="").pack()))
+    else:
+        buttons.append(InlineKeyboardButton(text=msg.bot.ml.msg("start_scheduler"),
+            callback_data=AdminCbFactory(type="restart_scheduler", selected="").pack()))
+
     kbd = InlineKeyboardBuilder()
     kbd.add(*buttons)
     kbd.adjust(1)
-    await msg.answer(text=msg.bot.ml.msg("admin_panel"), reply_markup=kbd.as_markup())
+
+    if is_answer:
+        await msg.answer(text=msg.bot.ml.msg("admin_panel"), reply_markup=kbd.as_markup())
+    else:
+        await msg.edit_text(text=msg.bot.ml.msg("admin_panel"), reply_markup=kbd.as_markup())
 
 
 @router.callback_query(AdminCbFactory.filter())
@@ -53,7 +62,11 @@ async def restart_scheduler(call: CallbackQuery, callback_data: AdminCbFactory, 
     if callback_data.type == "stop_scheduler":
         job_status = await bot.provider.stop_scheduler()
         await call.message.answer(f"Content provider job {job_status}")
+        await show_admin_keyboard(call.message)
 
     if callback_data.type == "restart_scheduler":
         next_run = await bot.provider.restart_scheduler()
         await call.message.answer(f"Content provider job restarted.\nNext run at: {next_run}")
+        await show_admin_keyboard(call.message)
+
+    await call.answer()

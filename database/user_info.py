@@ -18,18 +18,19 @@ class UserInfo:
 
         user = await self.db.get_user(u_id)
         if len(user) == 0:
-            await self.db.add_user(u_id, u_name, u_lang, 'guest')
+            await self.db.add_user(u_id, u_name, u_lang, 'guest', 'none')
 
         await self.set_user(u_id)
         return self
 
     async def set_user(self, user_id):
         user = await self.db.get_user(user_id)
-        if len(user) == 4:
+        if user:
             self.user_data["user_id"] = user[0]
             self.user_data["first_name"] = user[1]
             self.user_data["lang"] = user[2]
             self.user_data["role"] = user[3]
+            self.user_data["content_type"] = user[4]
 
     def get_id(self):
         return self.user_data["user_id"]
@@ -42,6 +43,9 @@ class UserInfo:
 
     def get_language(self):
         return self.user_data["lang"]
+
+    def get_content_type(self):
+        return self.user_data["content_type"]
 
     async def update_user_info(self, param, value):
         await self.db.update_user(self.get_id(), param, value)

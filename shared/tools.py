@@ -19,9 +19,9 @@ def build_start_message(ui: UserInfo, ml: MultiLang):
 
     channels_list = ""
     channels = {
-        "ru": [Config.smart_ch_ru_name, Config.smart_ch_ru_link],
-        "en": [Config.smart_ch_en_name, Config.smart_ch_en_link],
-        "he": [Config.smart_ch_he_name, Config.smart_ch_he_link],
+        "ru": [Config.channel_ru_name, Config.channel_ru_link],
+        "en": [Config.channel_en_name, Config.channel_en_link],
+        "he": [Config.channel_he_name, Config.channel_he_link],
     }
     for channel in channels:
         channels_list += f'<b>{channels[channel][0]}</b>: <u>{channels[channel][1]}</u>\n'
