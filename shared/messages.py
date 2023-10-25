@@ -24,6 +24,9 @@ MESSAGES_RU = {
     "external_csv": 'Внешний CSV-файл',
     "external_json": 'Внешний JSON файл',
     "back_to_admin": 'Вернуться в панель администратора',
+    "ru_prompt": 'Обновить Русский промпт',
+    "en_prompt": 'Обновить Английский промпт',
+    "he_prompt": 'Обновить промпт для Иврита',
 }
 
 MESSAGES_EN = {
@@ -49,6 +52,9 @@ MESSAGES_EN = {
     "external_csv": 'External CSV file',
     "external_json": 'External JSON file',
     "back_to_admin": 'Return to Admin panel',
+    "ru_prompt": 'Update Russian Prompt',
+    "en_prompt": 'Update English Prompt',
+    "he_prompt": 'Update Hebrew Prompt',
 }
 
 MESSAGES_HE = {
@@ -74,6 +80,9 @@ MESSAGES_HE = {
     "external_csv": 'קובץ CSV חיצוני',
     "external_json": 'קובץ JSON חיצוני',
     "back_to_admin": 'חזור ללוח הניהול',
+    "ru_prompt": 'עדכון הנחיה לרוסית',
+    "en_prompt": 'עדכון הנחיה לאנגלית',
+    "he_prompt": 'עדכון הנחיה לעברית',
 }
 
 
@@ -92,7 +101,7 @@ class MultiLang:
         lang_selector = self.lang if lang == "" else lang
         if lang_selector == "ru":
             return MESSAGES_RU.get(msg_id)
-        elif lang_selector == "en":
-            return MESSAGES_EN.get(msg_id)
-        else:
+        elif lang_selector == "he":
             return MESSAGES_HE.get(msg_id)
+        else:
+            return MESSAGES_EN.get(msg_id)

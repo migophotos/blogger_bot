@@ -18,6 +18,13 @@ class Config:
     #   Hebrew channel
     channel_he_name: str = "חי לנצח"
     channel_he_link: str = "@flp_heb_smart_channel"
+
+    channels_list = {
+        "ru": [channel_ru_name, channel_ru_link],
+        "en": [channel_en_name, channel_en_link],
+        "he": [channel_he_name, channel_he_link],
+    }
+
     #                month, day, day of week, hour, minute, jitter (+- seconds)
     def_scheduler = ("", "*", "", "10", "", "")
 

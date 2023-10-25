@@ -24,3 +24,7 @@ class ContentTypeCbFactory(CallbackData, prefix="content_manage"):
     selected: str
 
 
+class PromptConfigCb(CallbackData, prefix="content_manage"):
+    selected_prompt: str
+
+

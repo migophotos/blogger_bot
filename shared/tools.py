@@ -3,6 +3,15 @@ from shared.messages import MultiLang
 from shared.config import Config
 
 
+def logger(function):
+    def wrapper(*args, **kwargs):
+        print(f"----- {function.__name__}: start -----")
+        output = function(*args, **kwargs)
+        print(f"----- {function.__name__}: end -----")
+        return output
+    return wrapper
+
+
 def build_profile_text(ui: UserInfo, ml: MultiLang):
     profile_text = f'{ml.msg("hello")} <b>{ui.get_first_name()}</b>' \
                    f'\n<b>{ml.msg("your_role")}</b>: {ui.get_role()}' \
@@ -17,18 +26,13 @@ def build_start_message(ui: UserInfo, ml: MultiLang):
     if ui.is_admin():
         admin_text += ml.msg("admin_text")
 
-    channels_list = ""
-    channels = {
-        "ru": [Config.channel_ru_name, Config.channel_ru_link],
-        "en": [Config.channel_en_name, Config.channel_en_link],
-        "he": [Config.channel_he_name, Config.channel_he_link],
-    }
-    for channel in channels:
-        channels_list += f'<b>{channels[channel][0]}</b>: <u>{channels[channel][1]}</u>\n'
+    channels = ""
+    for channel in Config.channels_list:
+        channels += f'<b>{Config.channels_list[channel][0]}</b>: <u>{Config.channels_list[channel][1]}</u>\n'
 
     start_message = f'{ml.msg("about_bot")}\n\n' \
                     f'{admin_text}\n\n' \
-                    f'{ml.msg("channel_invitation").format(channels_list)}',
+                    f'{ml.msg("channel_invitation").format(channels)}',
 
     return start_message[0]
 

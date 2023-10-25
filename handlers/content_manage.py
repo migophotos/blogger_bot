@@ -4,7 +4,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from database.sql import DataBase
 from database.user_info import UserInfo
-from handlers.callback_factory import ContentCbFactory, ContentTypeCbFactory
+from handlers.callback_factory import ContentCbFactory, ContentTypeCbFactory, PromptConfigCb
 from shared.messages import MultiLang
 from shared.config import Config
 
@@ -38,6 +38,18 @@ async def change_content(call: CallbackQuery, callback_data: ContentCbFactory, b
     await call.answer()
 
 
+def prompt_selector_kb(ml: MultiLang):
+    buttons = [
+        InlineKeyboardButton(text=ml.msg("ru_prompt"), callback_data=PromptConfigCb(selected_prompt="ru").pack()),
+        InlineKeyboardButton(text=ml.msg("en_prompt"), callback_data=PromptConfigCb(selected_prompt="en").pack()),
+        InlineKeyboardButton(text=ml.msg("he_prompt"), callback_data=PromptConfigCb(selected_prompt="he").pack())
+    ]
+    kbd = InlineKeyboardBuilder()
+    kbd.add(*buttons)
+    kbd.adjust(1)
+    return kbd
+
+
 @router.callback_query(ContentTypeCbFactory.filter())
 async def content_selector(call: CallbackQuery, callback_data: ContentTypeCbFactory, bot: Bot):
     db: DataBase = bot.db
@@ -53,7 +65,7 @@ async def content_selector(call: CallbackQuery, callback_data: ContentTypeCbFact
 
     await db.update_user(ui.get_id(), "content_type", content_type)
     if content_type == 'openai':
-        pass
+        prompt_selector_kb(ml)
     elif content_type == 'external_csv':
         pass
     elif content_type == 'external_json':
